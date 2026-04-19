@@ -1,0 +1,48 @@
+<mvc:View
+    controllerName="com.capstone.o2c.controller.QuotationCreate"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+
+    <Page title="Create Quotation (VA21)"
+        showNavButton="true"
+        navButtonPress="onNavBack">
+        <headerContent>
+            <Button text="Save" icon="sap-icon://save" press="onSave" type="Emphasized"/>
+            <Button text="Cancel" press="onNavBack"/>
+        </headerContent>
+        <VBox class="sapUiMediumMargin">
+            <Panel headerText="Quotation Header">
+                <f:SimpleForm editable="true" layout="ResponsiveGridLayout"
+                    labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12"
+                    emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0">
+                    <f:content>
+                        <Label text="Customer" required="true"/>
+                        <Select id="customer" items="{o2c>/Customers}">
+                            <core:Item key="{o2c>CustomerId}" text="{o2c>Name}"/>
+                        </Select>
+
+                        <Label text="Reference Inquiry"/>
+                        <Select id="inquiryRef" items="{o2c>/Inquiries}">
+                            <core:Item key="{o2c>InquiryId}" text="{o2c>InquiryId}"/>
+                        </Select>
+
+                        <Label text="Quotation Date"/>
+                        <DatePicker id="quotDate" valueFormat="yyyy-MM-dd" displayFormat="dd/MM/yyyy"/>
+
+                        <Label text="Valid To Date" required="true"/>
+                        <DatePicker id="validTo" valueFormat="yyyy-MM-dd" displayFormat="dd/MM/yyyy"/>
+
+                        <Label text="Net Value (INR)" required="true"/>
+                        <Input id="netValue" type="Number" placeholder="0.00"/>
+
+                        <Label text="Special Conditions"/>
+                        <TextArea id="conditions" rows="3" width="100%"
+                            placeholder="Delivery terms, warranty, special pricing..."/>
+                    </f:content>
+                </f:SimpleForm>
+            </Panel>
+        </VBox>
+    </Page>
+</mvc:View>

@@ -1,0 +1,25 @@
+/* ─── O2C Custom Styles ─────────────────────────────────────────── */
+
+/* Dashboard process step tiles */
+.o2cProcessTile {
+    min-width: 140px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: box-shadow 0.2s;
+}
+.o2cProcessTile:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+}
+
+/* KPI highlight */
+.o2cKpiPositive .sapMObjStatusText { color: #107E3E !important; font-weight: bold; }
+.o2cKpiNegative .sapMObjStatusText { color: #BB0000 !important; font-weight: bold; }
+
+/* Table header accent */
+.sapMListTblHeaderCell {
+    background-color: #f5f5f5;
+}
+
+/* Process progress bar */
+.o2cProcessBar .sapMPIBar { border-radius: 4px; }

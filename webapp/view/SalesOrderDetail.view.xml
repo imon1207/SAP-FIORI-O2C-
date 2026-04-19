@@ -1,0 +1,119 @@
+<mvc:View
+    controllerName="com.capstone.o2c.controller.SalesOrderDetail"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:uxap="sap.uxap"
+    xmlns:layout="sap.ui.layout">
+
+    <uxap:ObjectPageLayout id="objectPage" showTitleInHeaderContent="false">
+
+        <uxap:headerTitle>
+            <uxap:ObjectPageDynamicHeaderTitle>
+                <uxap:heading>
+                    <Title text="{detail>/SalesOrderId}" level="H2"/>
+                </uxap:heading>
+                <uxap:expandedContent>
+                    <ObjectStatus
+                        text="{detail>/Status}"
+                        state="{path: 'detail>/Status', formatter: '.getStatusState'}"/>
+                </uxap:expandedContent>
+                <uxap:actions>
+                    <Button text="Edit" icon="sap-icon://edit" press="onEdit" type="Emphasized"/>
+                    <Button text="Back" icon="sap-icon://nav-back" press="onNavBack"/>
+                </uxap:actions>
+            </uxap:ObjectPageDynamicHeaderTitle>
+        </uxap:headerTitle>
+
+        <uxap:headerContent>
+            <layout:HorizontalLayout>
+                <ObjectAttribute title="Customer"       text="{detail>/CustomerName}"/>
+                <ObjectAttribute title="Customer ID"    text="{detail>/CustomerId}"        class="sapUiMediumMarginBegin"/>
+                <ObjectAttribute title="Order Date"     text="{detail>/OrderDate}"         class="sapUiMediumMarginBegin"/>
+                <ObjectAttribute title="Delivery Date"  text="{detail>/RequestedDelivery}" class="sapUiMediumMarginBegin"/>
+                <ObjectAttribute title="Payment Terms"  text="{detail>/PaymentTerms}"      class="sapUiMediumMarginBegin"/>
+                <ObjectAttribute title="Quotation Ref"  text="{detail>/QuotationId}"       class="sapUiMediumMarginBegin"/>
+                <ObjectNumber
+                    number="{detail>/NetValue}"
+                    unit="{detail>/Currency}"
+                    emphasized="true"
+                    state="Success"
+                    class="sapUiMediumMarginBegin"/>
+            </layout:HorizontalLayout>
+        </uxap:headerContent>
+
+        <uxap:sections>
+
+            <!-- Process Progress -->
+            <uxap:ObjectPageSection title="O2C Process Status" id="processSection">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection title="">
+                        <uxap:blocks>
+                            <VBox class="sapUiMediumMargin">
+                                <HBox alignItems="Center" justifyContent="SpaceBetween"
+                                      class="sapUiSmallMarginBottom">
+
+                                    <VBox alignItems="Center" class="sapUiSmallMarginEnd">
+                                        <core:Icon xmlns:core="sap.ui.core"
+                                            src="sap-icon://sales-order" size="2rem" color="#0070F2"/>
+                                        <Text text="Sales Order" class="sapUiTinyMarginTop"/>
+                                        <ObjectStatus text="Done" state="Success"/>
+                                    </VBox>
+
+                                    <ProgressIndicator
+                                        id="processProgress"
+                                        percentValue="{detail>/ProcessPercent}"
+                                        displayValue="{detail>/ProcessPercent}%"
+                                        width="60%"
+                                        state="{path: 'detail>/ProcessPercent', formatter: '.getProgressState'}"/>
+
+                                    <VBox alignItems="Center" class="sapUiSmallMarginBegin">
+                                        <core:Icon xmlns:core="sap.ui.core"
+                                            src="sap-icon://payment-approval" size="2rem" color="#0070F2"/>
+                                        <Text text="Payment" class="sapUiTinyMarginTop"/>
+                                        <ObjectStatus
+                                            text="{path: 'detail>/Status', formatter: '.getPaymentStatusText'}"
+                                            state="{path: 'detail>/Status', formatter: '.getPaymentStatusState'}"/>
+                                    </VBox>
+
+                                </HBox>
+
+                                <!-- Step labels -->
+                                <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginTop">
+                                    <Text text="Inquiry" class="sapUiSmallFont"/>
+                                    <Text text="Quotation" class="sapUiSmallFont"/>
+                                    <Text text="Sales Order" class="sapUiSmallFont"/>
+                                    <Text text="Delivery" class="sapUiSmallFont"/>
+                                    <Text text="Billing" class="sapUiSmallFont"/>
+                                    <Text text="Payment" class="sapUiSmallFont"/>
+                                </HBox>
+                            </VBox>
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+
+            <!-- Related Documents -->
+            <uxap:ObjectPageSection title="Related Documents" id="relatedSection">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection title="">
+                        <uxap:blocks>
+                            <List id="relatedDocsList"
+                                items="{detail>/RelatedDocs}"
+                                noDataText="No related documents found.">
+                                <StandardListItem
+                                    title="{detail>DocId}"
+                                    description="{detail>DocType}"
+                                    info="{detail>Status}"
+                                    infoState="{path: 'detail>Status', formatter: '.getStatusState'}"
+                                    icon="{path: 'detail>DocType', formatter: '.getDocTypeIcon'}"
+                                    type="Active"
+                                    press="onRelatedDocPress"/>
+                            </List>
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+
+        </uxap:sections>
+    </uxap:ObjectPageLayout>
+</mvc:View>

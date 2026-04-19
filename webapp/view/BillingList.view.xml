@@ -1,0 +1,50 @@
+<mvc:View
+    controllerName="com.capstone.o2c.controller.BillingList"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+
+    <Page title="Billing Documents (VF01/VF02/VF03)"
+        showNavButton="true"
+        navButtonPress="onNavBack">
+        <headerContent>
+            <Button text="Create Invoice" icon="sap-icon://add" press="onCreate" type="Emphasized"/>
+        </headerContent>
+
+        <Table id="billTable" items="{o2c>/BillingDocs}" growing="true">
+            <headerToolbar>
+                <Toolbar>
+                    <Title text="Billing Document List"/>
+                    <ToolbarSpacer/>
+                    <Text id="totalOpen"/>
+                </Toolbar>
+            </headerToolbar>
+            <columns>
+                <Column><Text text="Billing #"/></Column>
+                <Column><Text text="Delivery Ref"/></Column>
+                <Column><Text text="Customer"/></Column>
+                <Column><Text text="Billing Date"/></Column>
+                <Column><Text text="Due Date"/></Column>
+                <Column hAlign="End"><Text text="Net Value"/></Column>
+                <Column hAlign="End"><Text text="GST (18%)"/></Column>
+                <Column hAlign="End"><Text text="Total"/></Column>
+                <Column hAlign="Center"><Text text="Status"/></Column>
+            </columns>
+            <items>
+                <ColumnListItem type="Inactive">
+                    <cells>
+                        <ObjectIdentifier title="{o2c>BillingId}"/>
+                        <Text text="{o2c>DeliveryId}"/>
+                        <ObjectIdentifier title="{o2c>CustomerName}" text="{o2c>CustomerId}"/>
+                        <Text text="{o2c>BillingDate}"/>
+                        <Text text="{o2c>DueDate}"/>
+                        <ObjectNumber number="{o2c>NetValue}"   unit="{o2c>Currency}"/>
+                        <ObjectNumber number="{o2c>TaxValue}"   unit="{o2c>Currency}"/>
+                        <ObjectNumber number="{o2c>TotalValue}" unit="{o2c>Currency}" emphasized="true"/>
+                        <ObjectStatus text="{o2c>Status}"
+                            state="{path: 'o2c>Status', formatter: '.getStatusState'}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </Page>
+</mvc:View>

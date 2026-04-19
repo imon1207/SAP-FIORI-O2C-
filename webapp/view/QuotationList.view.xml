@@ -1,0 +1,49 @@
+<mvc:View
+    controllerName="com.capstone.o2c.controller.QuotationList"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+
+    <Page title="Quotations (VA21/VA22/VA23)"
+        showNavButton="true"
+        navButtonPress="onNavBack">
+        <headerContent>
+            <Button text="New Quotation" icon="sap-icon://add" press="onCreate" type="Emphasized"/>
+        </headerContent>
+
+        <Table id="quotTable" items="{o2c>/Quotations}" growing="true">
+            <headerToolbar>
+                <Toolbar>
+                    <Title text="Quotation List"/>
+                    <ToolbarSpacer/>
+                    <SearchField search="onSearch" width="220px"/>
+                </Toolbar>
+            </headerToolbar>
+            <columns>
+                <Column><Text text="Quotation #"/></Column>
+                <Column><Text text="Inquiry Ref"/></Column>
+                <Column><Text text="Customer"/></Column>
+                <Column><Text text="Date"/></Column>
+                <Column><Text text="Valid To"/></Column>
+                <Column hAlign="End"><Text text="Net Value (INR)"/></Column>
+                <Column hAlign="Center"><Text text="Status"/></Column>
+                <Column hAlign="Center"><Text text="Action"/></Column>
+            </columns>
+            <items>
+                <ColumnListItem type="Active" press="onItemPress">
+                    <cells>
+                        <Text text="{o2c>QuotationId}"/>
+                        <Text text="{o2c>InquiryId}"/>
+                        <ObjectIdentifier title="{o2c>CustomerName}" text="{o2c>CustomerId}"/>
+                        <Text text="{o2c>Date}"/>
+                        <Text text="{o2c>ValidTo}"/>
+                        <ObjectNumber number="{o2c>NetValue}" unit="INR"/>
+                        <ObjectStatus text="{o2c>Status}"
+                            state="{path: 'o2c>Status', formatter: '.getStatusState'}"/>
+                        <Button text="Create Sales Order" press="onConvertToSO" type="Ghost"
+                            enabled="{path: 'o2c>Status', formatter: '.isAccepted'}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </Page>
+</mvc:View>

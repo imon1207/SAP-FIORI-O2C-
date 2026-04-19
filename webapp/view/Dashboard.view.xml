@@ -1,0 +1,81 @@
+<mvc:View
+    controllerName="com.capstone.o2c.controller.Dashboard"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Page id="dashboardPage"
+        title="O2C Dashboard — Order to Cash"
+        showHeader="true"
+        class="sapUiResponsivePadding">
+
+        <headerContent>
+            <Button text="Process Flow" icon="sap-icon://process" press="onShowProcessFlow"/>
+        </headerContent>
+
+        <!-- KPI Tiles rendered programmatically -->
+        <VBox class="sapUiMediumMarginTop sapUiMediumMarginBottom">
+            <Title text="Key Performance Indicators" level="H2" class="sapUiSmallMarginBegin"/>
+            <HBox wrap="Wrap" id="kpiTileContainer"
+                class="sapUiSmallMarginTop sapUiSmallMarginBegin sapUiSmallMarginEnd"/>
+        </VBox>
+
+        <!-- Process Steps Navigation -->
+        <VBox class="sapUiMediumMarginBottom">
+            <Title text="O2C Process Steps" level="H2" class="sapUiSmallMarginBegin"/>
+            <HBox wrap="Wrap" class="sapUiSmallMarginTop sapUiSmallMarginBegin sapUiSmallMarginEnd"
+                  alignItems="Center">
+                <StandardTile icon="sap-icon://customer"        title="1. Inquiry"      info="VA11/VA12/VA13" infoState="Success" press="onNavigateInquiry"    class="sapUiSmallMarginEnd sapUiSmallMarginBottom"/>
+                <core:Icon src="sap-icon://arrow-right" size="1rem" class="sapUiSmallMarginEnd sapUiSmallMarginBottom"/>
+                <StandardTile icon="sap-icon://offer"           title="2. Quotation"    info="VA21/VA22/VA23" infoState="Success" press="onNavigateQuotation"  class="sapUiSmallMarginEnd sapUiSmallMarginBottom"/>
+                <core:Icon src="sap-icon://arrow-right" size="1rem" class="sapUiSmallMarginEnd sapUiSmallMarginBottom"/>
+                <StandardTile icon="sap-icon://sales-order"     title="3. Sales Order"  info="VA01/VA02/VA03" infoState="Success" press="onNavigateSalesOrder" class="sapUiSmallMarginEnd sapUiSmallMarginBottom"/>
+                <core:Icon src="sap-icon://arrow-right" size="1rem" class="sapUiSmallMarginEnd sapUiSmallMarginBottom"/>
+                <StandardTile icon="sap-icon://delivery-truck"  title="4. Delivery"     info="VL01N/VL02N"    infoState="Warning" press="onNavigateDelivery"   class="sapUiSmallMarginEnd sapUiSmallMarginBottom"/>
+                <core:Icon src="sap-icon://arrow-right" size="1rem" class="sapUiSmallMarginEnd sapUiSmallMarginBottom"/>
+                <StandardTile icon="sap-icon://activity-2"      title="5. Billing"      info="VF01/VF02/VF03" infoState="Warning" press="onNavigateBilling"    class="sapUiSmallMarginEnd sapUiSmallMarginBottom"/>
+                <core:Icon src="sap-icon://arrow-right" size="1rem" class="sapUiSmallMarginEnd sapUiSmallMarginBottom"/>
+                <StandardTile icon="sap-icon://payment-approval" title="6. Payment"     info="F-28/FBL5N"     infoState="Success" press="onNavigatePayment"    class="sapUiSmallMarginBottom"/>
+            </HBox>
+        </VBox>
+
+        <!-- Recent Sales Orders -->
+        <VBox class="sapUiMediumMarginBottom">
+            <Title text="Recent Sales Orders" level="H2" class="sapUiSmallMarginBegin"/>
+            <Table id="recentSOTable" items="{o2c>/SalesOrders}"
+                class="sapUiSmallMarginTop" growing="true" growingThreshold="5">
+                <headerToolbar>
+                    <Toolbar>
+                        <Title text="Sales Orders" level="H3"/>
+                        <ToolbarSpacer/>
+                        <Button text="Create New" icon="sap-icon://add" press="onCreateSalesOrder" type="Emphasized"/>
+                    </Toolbar>
+                </headerToolbar>
+                <columns>
+                    <Column><Text text="Sales Order"/></Column>
+                    <Column><Text text="Customer"/></Column>
+                    <Column><Text text="Order Date"/></Column>
+                    <Column><Text text="Delivery Date"/></Column>
+                    <Column hAlign="End"><Text text="Net Value (INR)"/></Column>
+                    <Column hAlign="Center"><Text text="Status"/></Column>
+                    <Column hAlign="Center"><Text text="Action"/></Column>
+                </columns>
+                <items>
+                    <ColumnListItem type="Navigation" press="onSalesOrderPress">
+                        <cells>
+                            <Text text="{o2c>SalesOrderId}"/>
+                            <Text text="{o2c>CustomerName}"/>
+                            <Text text="{o2c>OrderDate}"/>
+                            <Text text="{o2c>RequestedDelivery}"/>
+                            <ObjectNumber number="{o2c>NetValue}" unit="INR"/>
+                            <ObjectStatus text="{o2c>Status}"
+                                state="{path: 'o2c>Status', formatter: '.getStatusState'}"/>
+                            <Button text="View" icon="sap-icon://detail-view" press="onSalesOrderPress" type="Transparent"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </VBox>
+
+    </Page>
+</mvc:View>

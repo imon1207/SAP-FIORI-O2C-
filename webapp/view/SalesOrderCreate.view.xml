@@ -1,0 +1,133 @@
+<mvc:View
+    controllerName="com.capstone.o2c.controller.SalesOrderCreate"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:layout="sap.ui.layout">
+
+    <Page title="Create Sales Order (VA01)"
+        showNavButton="true"
+        navButtonPress="onNavBack">
+
+        <headerContent>
+            <Button text="Save" icon="sap-icon://save" press="onSave" type="Emphasized"/>
+            <Button text="Cancel" icon="sap-icon://cancel" press="onCancel"/>
+        </headerContent>
+
+        <VBox class="sapUiMediumMargin">
+
+            <!-- Header Section -->
+            <Panel headerText="Order Header" expandable="false">
+                <f:SimpleForm editable="true" layout="ResponsiveGridLayout"
+                    labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12"
+                    emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0"
+                    columnsXL="1" columnsL="1" columnsM="1">
+                    <f:content>
+                        <Label text="Sales Organization" required="true"/>
+                        <Select id="salesOrg" items="{/SalesOrgs}" selectedKey="1000">
+                            <core:Item key="1000" text="1000 – India Sales Org" xmlns:core="sap.ui.core"/>
+                        </Select>
+
+                        <Label text="Distribution Channel" required="true"/>
+                        <Select id="distChannel">
+                            <core:Item key="10" text="10 – Direct Sales" xmlns:core="sap.ui.core"/>
+                            <core:Item key="20" text="20 – Wholesale" xmlns:core="sap.ui.core"/>
+                        </Select>
+
+                        <Label text="Division" required="true"/>
+                        <Select id="division">
+                            <core:Item key="00" text="00 – Cross-Division" xmlns:core="sap.ui.core"/>
+                        </Select>
+
+                        <Label text="Customer" required="true"/>
+                        <Select id="customer" items="{o2c>/Customers}" selectedKey="">
+                            <core:Item xmlns:core="sap.ui.core"
+                                key="{o2c>CustomerId}"
+                                text="{path: 'o2c>CustomerId', formatter: '.formatter.customerText'}"/>
+                        </Select>
+
+                        <Label text="Purchase Order #"/>
+                        <Input id="poNumber" placeholder="Customer PO reference"/>
+
+                        <Label text="Requested Delivery Date" required="true"/>
+                        <DatePicker id="deliveryDate" valueFormat="yyyy-MM-dd" displayFormat="dd/MM/yyyy"/>
+
+                        <Label text="Payment Terms"/>
+                        <Select id="paymentTerms">
+                            <core:Item key="Z001" text="15 Days Net" xmlns:core="sap.ui.core"/>
+                            <core:Item key="Z002" text="30 Days Net" xmlns:core="sap.ui.core"/>
+                            <core:Item key="Z003" text="45 Days Net" xmlns:core="sap.ui.core"/>
+                            <core:Item key="Z004" text="Immediate" xmlns:core="sap.ui.core"/>
+                        </Select>
+                    </f:content>
+                </f:SimpleForm>
+            </Panel>
+
+            <!-- Line Items -->
+            <Panel headerText="Order Items" class="sapUiSmallMarginTop" expandable="false">
+                <headerToolbar>
+                    <Toolbar>
+                        <Title text="Line Items" level="H4"/>
+                        <ToolbarSpacer/>
+                        <Button text="Add Item" icon="sap-icon://add" press="onAddItem"/>
+                        <Button text="Delete Selected" icon="sap-icon://delete" press="onDeleteItem" type="Reject"/>
+                    </Toolbar>
+                </headerToolbar>
+
+                <Table id="itemTable"
+                    items="{path: 'newOrder>/Items'}"
+                    mode="MultiSelect">
+                    <columns>
+                        <Column><Text text="Item #"/></Column>
+                        <Column><Text text="Material"/></Column>
+                        <Column><Text text="Description"/></Column>
+                        <Column hAlign="End"><Text text="Quantity"/></Column>
+                        <Column><Text text="UoM"/></Column>
+                        <Column hAlign="End"><Text text="Unit Price"/></Column>
+                        <Column hAlign="End"><Text text="Net Value"/></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{newOrder>ItemNo}"/>
+                                <Select items="{o2c>/Materials}"
+                                    selectedKey="{newOrder>MaterialId}"
+                                    change="onMaterialChange">
+                                    <core:Item xmlns:core="sap.ui.core"
+                                        key="{o2c>MaterialId}"
+                                        text="{o2c>MaterialId}"/>
+                                </Select>
+                                <Text text="{newOrder>Description}"/>
+                                <Input value="{newOrder>Quantity}"
+                                    type="Number"
+                                    width="80px"
+                                    liveChange="onQuantityChange"/>
+                                <Text text="{newOrder>UoM}"/>
+                                <ObjectNumber number="{newOrder>UnitPrice}" unit="INR"/>
+                                <ObjectNumber number="{newOrder>NetValue}" unit="INR" emphasized="true"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+
+                <!-- Footer Totals -->
+                <Toolbar>
+                    <ToolbarSpacer/>
+                    <Text text="Sub-Total:"/>
+                    <ObjectNumber id="subTotal" number="{newOrder>/SubTotal}" unit="INR" class="sapUiSmallMarginBegin"/>
+                    <Text text="  GST (18%):"/>
+                    <ObjectNumber id="taxAmount" number="{newOrder>/TaxAmount}" unit="INR" class="sapUiSmallMarginBegin"/>
+                    <Text text="  Total:"/>
+                    <ObjectNumber id="grandTotal" number="{newOrder>/GrandTotal}" unit="INR"
+                        emphasized="true" state="Success" class="sapUiSmallMarginBegin sapUiSmallMarginEnd"/>
+                </Toolbar>
+            </Panel>
+
+            <!-- Notes -->
+            <Panel headerText="Remarks / Special Instructions" class="sapUiSmallMarginTop" expandable="true" expanded="false">
+                <TextArea id="remarks" rows="3" width="100%" placeholder="Enter any special instructions..."/>
+            </Panel>
+
+        </VBox>
+    </Page>
+</mvc:View>

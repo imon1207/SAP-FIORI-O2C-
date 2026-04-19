@@ -1,0 +1,79 @@
+{
+  "_version": "1.58.0",
+  "sap.app": {
+    "id": "com.capstone.o2c",
+    "type": "application",
+    "title": "Order-to-Cash (O2C) - Complete Sales Cycle",
+    "description": "SAP Fiori Capstone Project – SAP SD O2C Module",
+    "applicationVersion": { "version": "1.0.0" }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": { "icon": "sap-icon://sales-order" },
+    "deviceTypes": { "desktop": true, "tablet": true, "phone": true }
+  },
+  "sap.fiori": {
+    "registrationIds": ["F0001"],
+    "archeType": "transactional"
+  },
+  "sap.ui5": {
+    "rootView": {
+      "viewName": "com.capstone.o2c.view.App",
+      "type": "XML",
+      "id": "appView"
+    },
+    "dependencies": {
+      "minUI5Version": "1.108.0",
+      "libs": {
+        "sap.ui.core":   {},
+        "sap.m":         {},
+        "sap.uxap":      {},
+        "sap.ui.layout": {}
+      }
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": { "bundleName": "com.capstone.o2c.i18n.i18n" }
+      }
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "viewPath": "com.capstone.o2c.view",
+        "controlId": "navContainer",
+        "controlAggregation": "pages",
+        "transition": "slide"
+      },
+      "routes": [
+        { "name": "dashboard",      "pattern": "",                  "target": "dashboard" },
+        { "name": "inquiryList",    "pattern": "inquiries",         "target": "inquiryList" },
+        { "name": "inquiryCreate",  "pattern": "inquiry/create",    "target": "inquiryCreate" },
+        { "name": "inquiryDetail",  "pattern": "inquiry/{id}",      "target": "inquiryDetail" },
+        { "name": "quotationList",  "pattern": "quotations",        "target": "quotationList" },
+        { "name": "quotationCreate","pattern": "quotation/create",  "target": "quotationCreate" },
+        { "name": "salesOrderList", "pattern": "salesorders",       "target": "salesOrderList" },
+        { "name": "salesOrderCreate","pattern": "salesorder/create","target": "salesOrderCreate" },
+        { "name": "salesOrderDetail","pattern": "salesorder/{id}",  "target": "salesOrderDetail" },
+        { "name": "deliveryList",   "pattern": "deliveries",        "target": "deliveryList" },
+        { "name": "billingList",    "pattern": "billing",           "target": "billingList" },
+        { "name": "paymentList",    "pattern": "payments",          "target": "paymentList" }
+      ],
+      "targets": {
+        "dashboard":       { "viewName": "Dashboard" },
+        "inquiryList":     { "viewName": "InquiryList" },
+        "inquiryCreate":   { "viewName": "InquiryCreate" },
+        "inquiryDetail":   { "viewName": "InquiryList" },
+        "quotationList":   { "viewName": "QuotationList" },
+        "quotationCreate": { "viewName": "QuotationCreate" },
+        "salesOrderList":  { "viewName": "SalesOrderList" },
+        "salesOrderCreate":{ "viewName": "SalesOrderCreate" },
+        "salesOrderDetail":{ "viewName": "SalesOrderDetail" },
+        "deliveryList":    { "viewName": "DeliveryList" },
+        "billingList":     { "viewName": "BillingList" },
+        "paymentList":     { "viewName": "PaymentList" }
+      }
+    }
+  }
+}

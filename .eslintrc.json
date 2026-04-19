@@ -1,0 +1,10 @@
+{
+  "env": { "browser": true, "es6": true },
+  "extends": ["eslint:recommended"],
+  "globals": { "sap": "readonly" },
+  "rules": {
+    "no-unused-vars": "warn",
+    "eqeqeq": "error",
+    "no-console": "warn"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "com.capstone.o2c",
+  "author": "Imon Banerjee <imon.banerjee92@gmail.com>",
+  "version": "1.0.0",
+  "description": "SAP Fiori Capstone – Order-to-Cash (O2C) Complete Sales Cycle",
+  "scripts": {
+    "start": "ui5 serve -o index.html",
+    "build": "ui5 build --all",
+    "lint": "eslint webapp/**/*.js"
+  },
+  "devDependencies": {
+    "@ui5/cli": "^3.9.0",
+    "@sap/eslint-plugin-ui5-jsdocs": "^2.0.8"
+  }
+}

@@ -1,0 +1,67 @@
+<mvc:View
+    controllerName="com.capstone.o2c.controller.SalesOrderList"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Page title="Sales Orders (VA01/VA02/VA03)"
+        showNavButton="true"
+        navButtonPress="onNavBack">
+
+        <headerContent>
+            <Button text="Create" icon="sap-icon://add" press="onCreatePress" type="Emphasized"/>
+            <SearchField width="250px" search="onSearch" placeholder="Search by customer / order..."/>
+        </headerContent>
+
+        <Table id="soTable"
+            items="{o2c>/SalesOrders}"
+            growing="true"
+            growingThreshold="10"
+            sticky="ColumnHeaders,HeaderToolbar">
+
+            <headerToolbar>
+                <Toolbar>
+                    <Title text="Sales Order List" level="H3"/>
+                    <ToolbarSpacer/>
+                    <SegmentedButton id="statusFilter" selectionChange="onStatusFilterChange">
+                        <items>
+                            <SegmentedButtonItem text="All" key="ALL" pressed="true"/>
+                            <SegmentedButtonItem text="Delivery Pending" key="Delivery Pending"/>
+                            <SegmentedButtonItem text="Delivered" key="Delivered"/>
+                            <SegmentedButtonItem text="Billed" key="Billed"/>
+                            <SegmentedButtonItem text="Paid" key="Paid"/>
+                        </items>
+                    </SegmentedButton>
+                </Toolbar>
+            </headerToolbar>
+
+            <columns>
+                <Column minScreenWidth="Small" demandPopin="false"><Text text="Sales Order #"/></Column>
+                <Column><Text text="Customer"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Order Date"/></Column>
+                <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Delivery Date"/></Column>
+                <Column hAlign="End"><Text text="Net Value"/></Column>
+                <Column hAlign="Center"><Text text="Payment Terms"/></Column>
+                <Column hAlign="Center"><Text text="Status"/></Column>
+                <Column hAlign="Center"><Text text=""/></Column>
+            </columns>
+
+            <items>
+                <ColumnListItem type="Navigation" press="onItemPress">
+                    <cells>
+                        <ObjectIdentifier title="{o2c>SalesOrderId}" text="{o2c>QuotationId}"/>
+                        <ObjectIdentifier title="{o2c>CustomerName}" text="{o2c>CustomerId}"/>
+                        <Text text="{o2c>OrderDate}"/>
+                        <Text text="{o2c>RequestedDelivery}"/>
+                        <ObjectNumber number="{o2c>NetValue}" unit="{o2c>Currency}"/>
+                        <Text text="{o2c>PaymentTerms}"/>
+                        <ObjectStatus text="{o2c>Status}"
+                            state="{path: 'o2c>Status', formatter: '.getStatusState'}"
+                            icon="{path: 'o2c>Status', formatter: '.getStatusIcon'}"/>
+                        <Button icon="sap-icon://detail-view" type="Transparent" press="onItemPress"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </Page>
+</mvc:View>

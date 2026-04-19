@@ -1,0 +1,11 @@
+<mvc:View
+    controllerName="com.capstone.o2c.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    displayBlock="true">
+
+    <Shell id="shell">
+        <App id="navContainer" autoFocus="false"/>
+    </Shell>
+
+</mvc:View>

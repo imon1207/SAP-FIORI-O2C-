@@ -1,0 +1,54 @@
+<mvc:View
+    controllerName="com.capstone.o2c.controller.InquiryCreate"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+
+    <Page title="Create Customer Inquiry (VA11)"
+        showNavButton="true"
+        navButtonPress="onNavBack">
+        <headerContent>
+            <Button text="Save" icon="sap-icon://save" press="onSave" type="Emphasized"/>
+            <Button text="Cancel" press="onNavBack"/>
+        </headerContent>
+
+        <VBox class="sapUiMediumMargin">
+            <Panel headerText="Inquiry Details">
+                <f:SimpleForm editable="true" layout="ResponsiveGridLayout"
+                    labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12"
+                    emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0">
+                    <f:content>
+                        <Label text="Customer" required="true"/>
+                        <Select id="customer" items="{o2c>/Customers}">
+                            <core:Item key="{o2c>CustomerId}" text="{o2c>Name}"/>
+                        </Select>
+
+                        <Label text="Sales Organization" required="true"/>
+                        <Select id="salesOrg">
+                            <core:Item key="1000" text="1000 – India Sales Org"/>
+                        </Select>
+
+                        <Label text="Distribution Channel"/>
+                        <Select id="distChannel">
+                            <core:Item key="10" text="10 – Direct Sales"/>
+                            <core:Item key="20" text="20 – Wholesale"/>
+                        </Select>
+
+                        <Label text="Inquiry Date"/>
+                        <DatePicker id="inquiryDate" valueFormat="yyyy-MM-dd" displayFormat="dd/MM/yyyy"/>
+
+                        <Label text="Validity End Date"/>
+                        <DatePicker id="validTo" valueFormat="yyyy-MM-dd" displayFormat="dd/MM/yyyy"/>
+
+                        <Label text="Estimated Value (INR)"/>
+                        <Input id="estimatedValue" type="Number" placeholder="0.00"/>
+
+                        <Label text="Description / Requirement"/>
+                        <TextArea id="description" rows="4" width="100%" placeholder="Describe customer requirement..."/>
+                    </f:content>
+                </f:SimpleForm>
+            </Panel>
+        </VBox>
+    </Page>
+</mvc:View>

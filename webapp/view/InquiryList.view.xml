@@ -1,0 +1,45 @@
+<mvc:View
+    controllerName="com.capstone.o2c.controller.InquiryList"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+
+    <Page title="Customer Inquiries (VA11/VA12/VA13)"
+        showNavButton="true"
+        navButtonPress="onNavBack">
+        <headerContent>
+            <Button text="New Inquiry" icon="sap-icon://add" press="onCreate" type="Emphasized"/>
+        </headerContent>
+
+        <Table id="inquiryTable" items="{o2c>/Inquiries}" growing="true">
+            <headerToolbar>
+                <Toolbar>
+                    <Title text="Inquiry List"/>
+                    <ToolbarSpacer/>
+                    <SearchField search="onSearch" width="220px" placeholder="Search customer..."/>
+                </Toolbar>
+            </headerToolbar>
+            <columns>
+                <Column><Text text="Inquiry #"/></Column>
+                <Column><Text text="Customer"/></Column>
+                <Column><Text text="Date"/></Column>
+                <Column hAlign="End"><Text text="Net Value (INR)"/></Column>
+                <Column hAlign="Center"><Text text="Status"/></Column>
+                <Column hAlign="Center"><Text text="Action"/></Column>
+            </columns>
+            <items>
+                <ColumnListItem type="Active" press="onItemPress">
+                    <cells>
+                        <Text text="{o2c>InquiryId}"/>
+                        <ObjectIdentifier title="{o2c>CustomerName}" text="{o2c>CustomerId}"/>
+                        <Text text="{o2c>Date}"/>
+                        <ObjectNumber number="{o2c>NetValue}" unit="INR"/>
+                        <ObjectStatus text="{o2c>Status}"
+                            state="{path: 'o2c>Status', formatter: '.getStatusState'}"/>
+                        <Button text="Create Quotation" press="onConvertToQuotation" type="Ghost"
+                            enabled="{path: 'o2c>Status', formatter: '.isOpen'}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </Page>
+</mvc:View>

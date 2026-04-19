@@ -1,0 +1,45 @@
+<mvc:View
+    controllerName="com.capstone.o2c.controller.DeliveryList"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+
+    <Page title="Outbound Deliveries (VL01N/VL02N/VL03N)"
+        showNavButton="true"
+        navButtonPress="onNavBack">
+
+        <Table id="delTable" items="{o2c>/Deliveries}" growing="true">
+            <headerToolbar>
+                <Toolbar>
+                    <Title text="Delivery List"/>
+                    <ToolbarSpacer/>
+                    <Button text="Post Goods Issue" icon="sap-icon://approvals" press="onPostGI" type="Emphasized"/>
+                </Toolbar>
+            </headerToolbar>
+            <columns>
+                <Column><Text text="Delivery #"/></Column>
+                <Column><Text text="Sales Order Ref"/></Column>
+                <Column><Text text="Planned Date"/></Column>
+                <Column><Text text="Actual Date"/></Column>
+                <Column hAlign="Center"><Text text="WH Status"/></Column>
+                <Column hAlign="Center"><Text text="Status"/></Column>
+                <Column hAlign="Center"><Text text="Action"/></Column>
+            </columns>
+            <items>
+                <ColumnListItem type="Inactive">
+                    <cells>
+                        <ObjectIdentifier title="{o2c>DeliveryId}"/>
+                        <Text text="{o2c>SalesOrderId}"/>
+                        <Text text="{o2c>PlannedDate}"/>
+                        <Text text="{o2c>ActualDate}"/>
+                        <ObjectStatus text="{o2c>WarehouseStatus}"
+                            state="{path: 'o2c>WarehouseStatus', formatter: '.getStatusState'}"/>
+                        <ObjectStatus text="{o2c>Status}"
+                            state="{path: 'o2c>Status', formatter: '.getStatusState'}"/>
+                        <Button text="Post GI" press="onPostGISingle" type="Ghost"
+                            enabled="{path: 'o2c>Status', formatter: '.isPending'}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </Page>
+</mvc:View>

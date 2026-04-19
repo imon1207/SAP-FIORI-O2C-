@@ -1,0 +1,72 @@
+<mvc:View
+    controllerName="com.capstone.o2c.controller.PaymentList"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+
+    <Page title="Customer Payments (F-28 / FBL5N)"
+        showNavButton="true"
+        navButtonPress="onNavBack">
+        <headerContent>
+            <Button text="Post Payment" icon="sap-icon://add" press="onPostPayment" type="Emphasized"/>
+        </headerContent>
+
+        <Table id="payTable" items="{o2c>/Payments}" growing="true" noDataText="No payments recorded yet.">
+            <headerToolbar>
+                <Toolbar>
+                    <Title text="Payment Register"/>
+                    <ToolbarSpacer/>
+                    <Text id="totalCleared"/>
+                </Toolbar>
+            </headerToolbar>
+            <columns>
+                <Column><Text text="Payment #"/></Column>
+                <Column><Text text="Billing Ref"/></Column>
+                <Column><Text text="Customer"/></Column>
+                <Column><Text text="Payment Date"/></Column>
+                <Column hAlign="End"><Text text="Amount (INR)"/></Column>
+                <Column hAlign="Center"><Text text="Method"/></Column>
+                <Column><Text text="UTR / Reference"/></Column>
+                <Column hAlign="Center"><Text text="Status"/></Column>
+            </columns>
+            <items>
+                <ColumnListItem type="Inactive">
+                    <cells>
+                        <Text text="{o2c>PaymentId}"/>
+                        <Text text="{o2c>BillingId}"/>
+                        <ObjectIdentifier title="{o2c>CustomerName}" text="{o2c>CustomerId}"/>
+                        <Text text="{o2c>PaymentDate}"/>
+                        <ObjectNumber number="{o2c>Amount}" unit="INR" emphasized="true" state="Success"/>
+                        <Text text="{o2c>Method}"/>
+                        <Text text="{o2c>Reference}"/>
+                        <ObjectStatus text="{o2c>Status}" state="Success"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+
+        <!-- Open Invoices for Payment -->
+        <VBox class="sapUiMediumMarginTop sapUiMediumMarginBegin sapUiMediumMarginEnd">
+            <Title text="Open Invoices (Awaiting Payment)" level="H3"/>
+            <Table id="openBillTable" items="{o2c>/BillingDocs}" growing="true" noDataText="No open invoices.">
+                <columns>
+                    <Column><Text text="Invoice #"/></Column>
+                    <Column><Text text="Customer"/></Column>
+                    <Column><Text text="Due Date"/></Column>
+                    <Column hAlign="End"><Text text="Amount Due"/></Column>
+                    <Column hAlign="Center"><Text text="Action"/></Column>
+                </columns>
+                <items>
+                    <ColumnListItem visible="{path: 'o2c>Status', formatter: '.isOpen'}" type="Inactive">
+                        <cells>
+                            <Text text="{o2c>BillingId}"/>
+                            <Text text="{o2c>CustomerName}"/>
+                            <Text text="{o2c>DueDate}"/>
+                            <ObjectNumber number="{o2c>TotalValue}" unit="INR" emphasized="true" state="Error"/>
+                            <Button text="Receive Payment" press="onReceivePayment" type="Accept"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </VBox>
+    </Page>
+</mvc:View>
